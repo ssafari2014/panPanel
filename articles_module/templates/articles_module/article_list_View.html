@@ -1,0 +1,62 @@
+{% extends 'base/shird.html' %}
+{% load thumbnail %}
+{% load poll_extras %}
+{% load render_partial %}
+{% block title %}
+مقالات
+{% endblock %}
+{% block content %}
+<section>
+		<div class="container">
+			<div class="row">
+
+				<div class="col-sm-9">
+					<div class="blog-post-area">
+						<h2 class="title text-center">آخریـن اخبـار</h2>
+                        {% for item in article_list_View %}
+                             <div class="single-blog-post">
+							<h3>{{ item.title }}</h3>
+							<div class="post-meta">
+								<ul>
+									{% if item.auther %}
+									<li><i class="fa fa-user"></i>{{ item.auther }}</li>
+									{% endif %}
+									<li><i class="fa fa-clock-o"></i>{{ item.jalali_create_time }}</li>
+                                	<li><i class="fa fa-calendar"></i> {{ item.create_date | jalali_create_dates }}</li>
+
+{#									<li><i class="fa fa-calendar"></i> {{ item.jalali_create_date }}</li>#}
+								</ul>
+								<span>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star"></i>
+										<i class="fa fa-star-half-o"></i>
+								</span>
+							</div>
+							<a href="">
+{#								<img src="{{ item.images.url }}" alt="">#}
+                                {% thumbnail item.images "862x398" quality=80 crop='center' as im %}
+                                        <img src="{{ im.url }}">
+                                {% endthumbnail %}
+							</a>
+                                 <p>{{ item.short_descriptions }}</p>
+							<a class="btn btn-primary" href="">ادامـه مطلب</a>
+						</div>
+                        {% endfor %}
+
+						<div class="pagination-area">
+							<ul class="pagination">
+								<li><a href="" class="active">1</a></li>
+								<li><a href="">2</a></li>
+								<li><a href="">3</a></li>
+								<li><a href=""><i class="fa fa-angle-double-right"></i></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+                        {% render_partial 'articles_module.views.article_category_component' %}
+			</div>
+		</div>
+	</section>
+{% endblock %}
